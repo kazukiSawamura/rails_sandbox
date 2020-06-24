@@ -1,0 +1,9 @@
+doctype html
+html lang="ja"
+  head
+    title APP
+    = csrf_meta_tags
+    = csp_meta_tag
+    = javascript_pack_tag 'application'
+  body
+    = yield
