@@ -2,15 +2,19 @@ require 'faker'
 Faker::Config.locale = :ja
 
 Post.delete_all
-ActiveRecord::Base.connection.execute("TRUNCATE posts")
+statuses = Status.all.map{|s| [s.id, s.name]}.to_h
+
 100.times do |count|
   posts = []
   puts "Postのseedデータ作成(#{count+1}/100)..."
-  10000.times do
+  10000.times do |c|
     title = Faker::Lorem.sentence
-    description = Faker::Lorem.sentence(word_count: 100)
-    ngram_idx = UtilNgram.to_ngram(title + description)
-    posts << Post.new(title: title, description: description, ngram_idx: ngram_idx)
+    body = Faker::Lorem.sentence(word_count: 100)
+    status_id = c % Status.count + 1
+    posts << Post.new(title: title,
+                      status_id: status_id,
+                      body: body,
+                      fulltext: "#{title} #{body} #{statuses[status_id]}")
   end
   Post.import posts
 end

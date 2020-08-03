@@ -1,12 +1,14 @@
 FROM postgres:12.3
-
+ENV LANG ja_JP.UTF-8
 RUN localedef -i ja_JP -c -f UTF-8 -A /usr/share/locale/locale.alias ja_JP.UTF-8
 
-#RUN apt-get update -y && \
-#    apt-get install -y -V software-properties-common lsb-release && \
-#    add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) universe" && \
-#    add-apt-repository "deb http://security.ubuntu.com/ubuntu $(lsb_release --short --codename)-security main restricted" && \
-#    add-apt-repository -y ppa:groonga/ppa && \
-#    apt-get update -y && \
-#    apt-get install -y -V mysql-server-mroonga && \
-#    apt-get install -y -V groonga-tokenizer-mecab
+RUN apt update && \
+    apt install -y -V wget && \
+    wget https://packages.groonga.org/debian/groonga-archive-keyring-latest-buster.deb && \
+    apt install -y -V ./groonga-archive-keyring-latest-buster.deb && \
+    echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list && \
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+    wget -O /usr/share/keyrings/groonga-archive-keyring.gpg https://packages.groonga.org/debian/groonga-archive-keyring.gpg && \
+    apt update && \
+    apt install -y -V postgresql-12-pgroonga && \
+    apt install -y -V groonga-tokenizer-mecab

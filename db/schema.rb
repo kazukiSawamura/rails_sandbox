@@ -10,16 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_26_074043) do
+ActiveRecord::Schema.define(version: 2020_07_06_070321) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgroonga"
   enable_extension "plpgsql"
 
   create_table "posts", force: :cascade do |t|
     t.string "title"
-    t.text "description"
+    t.bigint "status_id", default: 1, null: false
+    t.text "body"
+    t.text "fulltext"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["title", "body", "fulltext"], name: "pgroonga_post_index", using: :pgroonga
+  end
+
+  create_table "statuses", force: :cascade do |t|
+    t.string "name"
+    t.index ["name"], name: "pgroonga_status_index", using: :pgroonga
   end
 
 end

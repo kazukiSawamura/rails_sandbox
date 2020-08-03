@@ -1,18 +1,17 @@
 class Post < ApplicationRecord
-  before_save do
-    self.ngram_idx = UtilNgram.to_ngram("#{self.title} #{self.description}")
-  end
 
-  scope :search_word, ->(key){
-      where("MATCH(ngram_idx) AGAINST('#{key}')")
+  belongs_to :status
+
+  fulltext_search_score = {
+      "posts.title"=>3,
+      "posts.body"=>1,
+      "statuses.name"=>2
   }
 
-  # scope :search, -> (key){
-  #   ngramed_key = UtilNgram.to_ngram(key, ' +')
-  #   where("match(ngram_idx) against (? in boolean mode)", "+#{ngramed_key}")
-  # }
-  def self.search(key)
-    ngramed_key = UtilNgram.to_ngram(key, ' +')
-    where("match(ngram_idx) against (? in boolean mode)", "+#{ngramed_key}")
-  end
+  scope :fulltext_search, ->(query) {
+    select("posts.*")
+        .where("fulltext &@~ '#{query}'")
+        .joins(:status)
+  }
+
 end
