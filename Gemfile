@@ -25,8 +25,9 @@ gem 'react-rails'
 gem 'active_hash'
 gem 'graphql'
 gem 'activerecord-import'
-gem "ngram"
-
+gem 'kaminari'
+gem 'discard'
+gem 'rails-i18n'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
@@ -52,6 +53,7 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
+  gem 'rspec-rails'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end

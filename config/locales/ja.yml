@@ -1,0 +1,10 @@
+ja:
+  activerecord:
+    models:
+      post: ポスト
+    attributes:
+      post:
+        title: イベント名
+        body: 本文
+        status: ステータス
+        status_id: ステータスID

@@ -17,12 +17,14 @@ ActiveRecord::Schema.define(version: 2020_07_06_070321) do
   enable_extension "plpgsql"
 
   create_table "posts", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.bigint "status_id", default: 1, null: false
-    t.text "body"
-    t.text "fulltext"
+    t.text "body", null: false
+    t.text "fulltext", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_posts_on_discarded_at"
     t.index ["title", "body", "fulltext"], name: "pgroonga_post_index", using: :pgroonga
   end
 
