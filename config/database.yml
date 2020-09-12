@@ -1,22 +1,20 @@
 default: &default
-  adapter: mysql2
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
-
-  username: <%= ENV.fetch("MYSQL_USER", "dev") %>
-  password: <%= ENV.fetch("MYSQL_PASSWORD", "password") %>
-  host: <%= ENV.fetch("MYSQL_HOST", "db") %>
-  port: <%= ENV.fetch("MYSQL_PORT", "3306") %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: <%= ENV.fetch("POSTGRES_USER", "dev") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD", "password") %>
+  host: <%= ENV.fetch("POSTGRES_HOST", "db") %>
 
 development:
   <<: *default
-  database: <%= ENV.fetch("MYSQL_DATABASE", "dev_db") %>
+  database: <%= ENV.fetch("POSTGRES_DATABASE", "dev_db") %>
 
 test:
   <<: *default
-  database: <%= ENV.fetch("MYSQL_TEST_DATABASE", "test_db") %>
+  database: <%= ENV.fetch("POSTGRES_TEST_DATABASE", "test_db") %>
 
 production:
   <<: *default
-  database: <%= ENV["MYSQL_DATABASE"] %>
+  database: <%= ENV["POSTGRES_DATABASE"] %>
   reconnect: true

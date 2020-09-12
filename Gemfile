@@ -5,8 +5,7 @@ ruby '2.7.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
-# Use mysql as the database for Active Record
-gem 'mysql2', '>= 0.4.4'
+gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
@@ -25,7 +24,10 @@ gem 'slim-rails'
 gem 'react-rails'
 gem 'active_hash'
 gem 'graphql'
-
+gem 'activerecord-import'
+gem 'kaminari'
+gem 'discard'
+gem 'rails-i18n'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
@@ -34,6 +36,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-byebug'
   gem 'pry-rails'
+  gem 'faker'
 end
 
 group :development do
@@ -50,9 +53,12 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
+  gem 'rspec-rails'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'graphiql-rails', group: :development
